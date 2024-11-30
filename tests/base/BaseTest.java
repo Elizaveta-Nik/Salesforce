@@ -11,12 +11,16 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
+import pages.LoginPage;
+import pages.NewAccountModal;
 
 import java.time.Duration;
 
 public class BaseTest {
 
-    WebDriver driver;
+    protected WebDriver driver;
+    protected NewAccountModal newAccountModal;
+    protected LoginPage loginPage;
 
 
     @Parameters({"browser"})
@@ -25,6 +29,7 @@ public class BaseTest {
     public void setup(@Optional("chrome") String browser) {
         if (browser.equalsIgnoreCase("chrome")) {
             ChromeOptions options = new ChromeOptions();
+            options.addArguments("--disable-notifications");
             options.addArguments("start-maximized");
             driver = new ChromeDriver(options);
         } else if (browser.equalsIgnoreCase("edge")) {
@@ -37,6 +42,9 @@ public class BaseTest {
             throw new IllegalArgumentException("Браузер не поддерживается: " + browser);
         }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        newAccountModal = new NewAccountModal(driver);
+        loginPage = new LoginPage(driver);
     }
 
 
