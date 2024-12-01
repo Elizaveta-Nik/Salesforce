@@ -12,7 +12,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import pages.LoginPage;
-import pages.NewAccountModal;
+import pages.Accounts.NewAccountModal;
+import pages.Contacts.NewContactModal;
 
 import java.time.Duration;
 
@@ -21,6 +22,7 @@ public class BaseTest {
     protected WebDriver driver;
     protected NewAccountModal newAccountModal;
     protected LoginPage loginPage;
+    protected NewContactModal newContactModal;
 
 
     @Parameters({"browser"})
@@ -44,6 +46,7 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         newAccountModal = new NewAccountModal(driver);
+        newContactModal = new NewContactModal(driver);
         loginPage = new LoginPage(driver);
     }
 

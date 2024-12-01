@@ -1,7 +1,8 @@
-package pages;
+package pages.Accounts;
 
 import io.qameta.allure.Description;
 import org.openqa.selenium.WebDriver;
+import pages.BasePage;
 import wrappers.Date;
 import wrappers.Input;
 import wrappers.Picklist;
