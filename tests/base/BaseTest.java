@@ -10,10 +10,13 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.Accounts.AccountsPage;
 import pages.Accounts.NewAccountModal;
-import pages.BasePage;
 import pages.Contacts.ContactsPage;
 import pages.Contacts.NewContactModal;
+import pages.HomePage;
 import pages.LoginPage;
+import steps.AccountStep;
+import steps.ContactStep;
+import steps.LoginStep;
 import tests.TestListener;
 
 import java.time.Duration;
@@ -27,6 +30,10 @@ public abstract class BaseTest {
     protected AccountsPage accountsPage;
     protected ContactsPage contactsPage;
     protected NewContactModal newContactModal;
+    protected AccountStep accountStep;
+    protected ContactStep contactStep;
+    protected LoginStep loginStep;
+    protected HomePage homePage;
 
     @Parameters({"browser"})
     @BeforeMethod(alwaysRun = true)
@@ -47,12 +54,15 @@ public abstract class BaseTest {
             throw new IllegalArgumentException("Браузер не поддерживается: " + browser);
         }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
         newAccountModal = new NewAccountModal(driver);
         newContactModal = new NewContactModal(driver);
         loginPage = new LoginPage(driver);
         accountsPage = new AccountsPage(driver);
         contactsPage = new ContactsPage(driver);
+        accountStep = new AccountStep(driver);
+        contactStep = new ContactStep(driver);
+        loginStep = new LoginStep(driver);
+        homePage = new HomePage(driver);
     }
 
     @AfterMethod(alwaysRun = true)
@@ -60,8 +70,4 @@ public abstract class BaseTest {
     public void tearDown(ITestResult result) {
         driver.quit();
     }
-
-    public abstract BasePage isPageOpened();
-
-    public abstract BasePage open();
 }

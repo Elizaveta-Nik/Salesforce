@@ -24,6 +24,7 @@ public class HomePage extends BasePage {
     @Step("Открытие 'Home page'")
     public HomePage open() {
         driver.get("https://tms9-dev-ed.develop.lightning.force.com/lightning/page/home");
+        waitForPageLoaded(driver);
         return this;
     }
 

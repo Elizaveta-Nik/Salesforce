@@ -44,7 +44,6 @@ public class AccountsPage extends BasePage {
         WebElement successMessage = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(By.cssSelector(MESSAGE_SELECTOR)));
         return successMessage.isDisplayed();
-
     }
 }
 //    private final By TITLE = By.xpath("//span[@class='slds-var-p-right_x-small']");

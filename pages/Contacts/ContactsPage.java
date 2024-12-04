@@ -32,7 +32,7 @@ public class ContactsPage extends BasePage {
     @Step("Нажатие на кнопку: {buttonName}")
     public NewContactModal clickOnActionButton(String buttonName) {
         By button = By.xpath(String.format(ACTION_BUTTON_PATTERN, buttonName));
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(button));
         driver.findElement(button).click();
         return new NewContactModal(driver);
@@ -44,7 +44,6 @@ public class ContactsPage extends BasePage {
         WebElement successMessage = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(By.cssSelector(MESSAGE_SELECTOR)));
         return successMessage.isDisplayed();
-
     }
 }
 

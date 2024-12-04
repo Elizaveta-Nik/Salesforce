@@ -17,6 +17,15 @@ public abstract class BasePage {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
+    public void waitForPageLoaded(WebDriver driver) {
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                return Objects.requireNonNull(((JavascriptExecutor)driver).executeScript("return document.readyState"))
+                        .toString().equals("complete");
+            }
+        });
+    }
+
     public abstract BasePage isPageOpened();
     public abstract BasePage open();
 }
