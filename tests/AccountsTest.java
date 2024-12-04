@@ -1,37 +1,47 @@
 package tests;
 
+import dto.Account;
 import io.qameta.allure.Description;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.Optional;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.BasePage;
+import steps.AccountStep;
 import tests.base.BaseTest;
 
-import java.time.Duration;
+import static dto.AccountFactory.getAccount;
 
 public class AccountsTest extends BaseTest {
 
-    String user = "tborodich@tms.sandbox";
-    String password = "Password001";
+    protected AccountStep accountStep;
 
-    @Test
-    @Description("Создание нового аккаунта с полностью заполненными полями.")
+    @BeforeMethod
+    public void setUp() {
+        accountStep = new AccountStep(driver);
+    }
+
+    @Override
+    public BasePage isPageOpened() {
+        return null;
+    }
+
+    @Override
+    public BasePage open() {
+        return null;
+    }
+
+    @Test(testName = "Создание нового аккаунта",
+            description = "Проверка, что новый аккаунт может быть создан создан с валидными данными")
+    @Description("Создание нового аккаунта с корректными данными")
     public void checkCreateAccount() {
-        loginPage.open();
-        loginPage.login(user, password);
-        driver.get("https://tms9-dev-ed.develop.lightning.force.com/lightning/o/Account/new");
+        loginPage.open()
+                .login("tborodich@tms.sandbox", "Password001")
+                .open()
+                .selectMenuOption("Accounts");
 
-        newAccountModal.createAccount("Veta-4", "Hot", "375-29-169-88-17", "1234555",
-                "1223", "https://www.onliner.by/", "https://www.onliner.by/",
-                "45", "Customer - Channel", "Subsidiary", "Banking", "8671",
-                "1000000000", "#47", "Majakovskogo", "Minsk", "Belarus",
-                "11111", "Belarus", "Kozlova", "Minsk", "Belarus",
-                "222222", "Belarus", "High", "Platinum", "21.01.2021",
-                "#101", "1", "Maybe", "Yes", "Wow");
-        driver.findElement(By.xpath("//*[@name='SaveEdit']")).click();
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@id='activityTab__item']")));
+        Account newAccount = getAccount("Hot", "Customer - Direct", "Private", "Chemicals",
+                "High", "Platinum", "Maybe", "Yes");
+        accountStep.create(newAccount);
+        accountStep.waitForPageLoaded(driver);
+        accountStep.checkCreateAccount();
     }
 }

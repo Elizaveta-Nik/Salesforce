@@ -7,23 +7,26 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
-import pages.LoginPage;
+import org.testng.annotations.*;
+import pages.Accounts.AccountsPage;
 import pages.Accounts.NewAccountModal;
+import pages.BasePage;
+import pages.Contacts.ContactsPage;
 import pages.Contacts.NewContactModal;
+import pages.LoginPage;
+import tests.TestListener;
 
 import java.time.Duration;
 
-public class BaseTest {
+@Listeners (TestListener.class)
+public abstract class BaseTest {
 
     protected WebDriver driver;
     protected NewAccountModal newAccountModal;
     protected LoginPage loginPage;
+    protected AccountsPage accountsPage;
+    protected ContactsPage contactsPage;
     protected NewContactModal newContactModal;
-
 
     @Parameters({"browser"})
     @BeforeMethod(alwaysRun = true)
@@ -48,12 +51,17 @@ public class BaseTest {
         newAccountModal = new NewAccountModal(driver);
         newContactModal = new NewContactModal(driver);
         loginPage = new LoginPage(driver);
+        accountsPage = new AccountsPage(driver);
+        contactsPage = new ContactsPage(driver);
     }
-
 
     @AfterMethod(alwaysRun = true)
     @Description("Закрытие браузера")
     public void tearDown(ITestResult result) {
         driver.quit();
     }
+
+    public abstract BasePage isPageOpened();
+
+    public abstract BasePage open();
 }
