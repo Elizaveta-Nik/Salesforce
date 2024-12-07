@@ -2,14 +2,17 @@ package pages.Contacts;
 
 import dto.Contact;
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.BasePage;
 import wrappers.Date;
 import wrappers.Input;
 import wrappers.Picklist;
 import wrappers.TextArea;
 
+@Log4j2
 public class NewContactModal extends BasePage {
 
     private final String BUTTON_PATTERN = "//lightning-button/button[text()='%s']";
@@ -19,17 +22,20 @@ public class NewContactModal extends BasePage {
     }
 
     @Override
-    public BasePage isPageOpened() {
-        return null;
+    public NewContactModal isPageOpened() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//lightning-button/button[text()='New']")));
+        return this;
     }
 
     @Override
-    public BasePage open() {
-        return null;
+    public NewContactModal open() {
+        driver.get("https://tms9-dev-ed.develop.lightning.force.com/lightning/o/Contact/new");
+        return this;
     }
 
     @Step("Заполнение формы нового контакта корректными данными.")
     public NewContactModal createContact(Contact contact) {
+        log.info("Creating contact '{}' '{}'", contact.getFirstName(),contact.getLastName());
         new Picklist(driver, "Salutation").select(contact.getSalutation());
         new Input(driver, "First Name").write(contact.getFirstName());
         new Input(driver, "Last Name").write(contact.getLastName());

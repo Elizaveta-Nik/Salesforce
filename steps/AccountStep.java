@@ -2,41 +2,35 @@ package steps;
 
 import dto.Account;
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import pages.Accounts.AccountsPage;
 import pages.Accounts.NewAccountModal;
 import pages.HomePage;
 
-import java.time.Duration;
-
+@Log4j2
 public class AccountStep {
 
     private final HomePage homePage;
     private final AccountsPage accountsPage;
     private final NewAccountModal newAccountModal;
-    private final WebDriverWait wait;
 
     public AccountStep(WebDriver driver) {
         homePage = new HomePage(driver);
         accountsPage = new AccountsPage(driver);
         newAccountModal = new NewAccountModal(driver);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        log.info("AccountStep initialized with driver: {}", driver);
     }
 
     @Step("Создание нового аккаунта")
     public void create(Account account) {
-        System.out.println("Создание нового аккаунта: " + account.getAccountName());
-        accountsPage.clickOnActionButton("New");
-        newAccountModal.createAccount(account);
-        newAccountModal.clickButton("Save");
-    }
-
-    @Step("Проверка создания аккаунта")
-    public void checkCreateAccount() {
-        boolean isAccountCreated = accountsPage.accountCreated();
-        Assert.assertTrue(isAccountCreated,
-                "Сообщение об удачно созданном аккаунте не отображается.");
+        log.info("Starting account creation for: {}", account);
+        homePage.open()
+                .isPageOpened()
+                .selectMenuOption("Accounts", AccountsPage.class)
+                .clickOnActionButton("New")
+                .createAccount(account)
+                .clickButton("Save");
+        log.info("Account created successfully: {}", account);
     }
 }

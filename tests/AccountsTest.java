@@ -2,25 +2,45 @@ package tests;
 
 import dto.Account;
 import io.qameta.allure.Description;
+import lombok.extern.log4j.Log4j2;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import tests.base.BaseTest;
 
 import static dto.AccountFactory.getAccount;
 
+@Log4j2
 public class AccountsTest extends BaseTest {
 
-    @Test(testName = "Создание нового аккаунта",
-            description = "Проверка, что новый аккаунт может быть создан создан с валидными данными")
-    @Description("Создание нового аккаунта с корректными данными")
+//    Faker faker = new Faker();
+//    Account account = Account.builder()
+//            .accountName("Veta")
+//            .fax("123123")
+//            .shippingState(faker.address().state())
+//            .build();
+
+    @Test(testName = "Create a new account",
+            description = "Verify that a new account can be created with valid data")
+    @Description("Creating a new account with valid data")
     public void checkCreateAccount() {
-        loginStep.login("tborodich@tms.sandbox", "Password001")
-                .open()
-                .selectMenuOption("Accounts");
+        log.info("Starting test: Create a new account");
+
+        loginStep.login();
+        log.info("Logged into the system");
 
         Account newAccount = getAccount("Hot", "Customer - Direct", "Private", "Chemicals",
                 "High", "Platinum", "Maybe", "Yes");
 
         accountStep.create(newAccount);
-        accountStep.checkCreateAccount();
+        log.info("Account created");
+
+        boolean isAccountCreated = accountsPage.accountCreated();
+        log.info("Account creation verification: {}", isAccountCreated);
+
+        Assert.assertTrue(isAccountCreated, "Account was not created.");
+        log.info("Test completed: Create a new account");
     }
 }
+
+
+

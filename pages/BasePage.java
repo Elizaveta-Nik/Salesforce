@@ -1,13 +1,15 @@
 package pages;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
+import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.Objects;
 
+@Log4j2
 public abstract class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
@@ -15,20 +17,24 @@ public abstract class BasePage {
     public BasePage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        log.info("BasePage initialized with driver: {}", driver);
     }
 
     public void waitForPageLoaded(WebDriver driver) {
+        log.info("Waiting for page to load");
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
-                return Objects.requireNonNull(((JavascriptExecutor)driver).executeScript("return document.readyState"))
+                return Objects.requireNonNull(((JavascriptExecutor) driver).executeScript("return document.readyState"))
                         .toString().equals("complete");
             }
         });
+        log.info("Page loaded successfully");
     }
 
     public abstract BasePage isPageOpened();
     public abstract BasePage open();
 }
+
 
 //    public void waitForPageLoaded() {
 //        new ExpectedCondition<Boolean>() {

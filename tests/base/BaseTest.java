@@ -1,6 +1,7 @@
 package tests.base;
 
 import io.qameta.allure.Description;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -21,7 +22,8 @@ import tests.TestListener;
 
 import java.time.Duration;
 
-@Listeners (TestListener.class)
+@Log4j2
+@Listeners(TestListener.class)
 public abstract class BaseTest {
 
     protected WebDriver driver;
@@ -37,8 +39,9 @@ public abstract class BaseTest {
 
     @Parameters({"browser"})
     @BeforeMethod(alwaysRun = true)
-    @Description("Открытие браузера")
+    @Description("Opening browser")
     public void setup(@Optional("chrome") String browser) {
+        log.info("Setting up browser: {}", browser);
         if (browser.equalsIgnoreCase("chrome")) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--disable-notifications");
@@ -51,7 +54,7 @@ public abstract class BaseTest {
             driver = new FirefoxDriver();
             driver.manage().window().maximize();
         } else {
-            throw new IllegalArgumentException("Браузер не поддерживается: " + browser);
+            throw new IllegalArgumentException("Unsupported browser: " + browser);
         }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         newAccountModal = new NewAccountModal(driver);
@@ -63,11 +66,14 @@ public abstract class BaseTest {
         contactStep = new ContactStep(driver);
         loginStep = new LoginStep(driver);
         homePage = new HomePage(driver);
+        log.info("Browser setup completed");
     }
 
     @AfterMethod(alwaysRun = true)
-    @Description("Закрытие браузера")
+    @Description("Closing browser")
     public void tearDown(ITestResult result) {
+        log.info("Tearing down browser");
         driver.quit();
+        log.info("Browser closed");
     }
 }

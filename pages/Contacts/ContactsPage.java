@@ -1,6 +1,7 @@
 package pages.Contacts;
 
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,9 +11,10 @@ import pages.BasePage;
 
 import java.time.Duration;
 
+@Log4j2
 public class ContactsPage extends BasePage {
 
-    private String MESSAGE_SELECTOR = "[data-aura-class=forceActionsText]";
+    private final By MESSAGE = By.xpath("//div[@data-aura-class='forceToastMessage']");
     private String ACTION_BUTTON_PATTERN = "//lightning-button/button[text()='%s']";
 
     public ContactsPage(WebDriver driver) {
@@ -20,17 +22,22 @@ public class ContactsPage extends BasePage {
     }
 
     @Override
-    public BasePage isPageOpened() {
-        return null;
+    public ContactsPage isPageOpened() {
+        log.info("Checking if Contacts page is opened");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@title='Name']")));
+        return this;
     }
 
     @Override
-    public BasePage open() {
-        return null;
+    public ContactsPage open() {
+        log.info("Opening Contacts page");
+        driver.get("https://tms9-dev-ed.develop.lightning.force.com/lightning/o/Contact/pipelineInspection");
+        return this;
     }
 
     @Step("Нажатие на кнопку: {buttonName}")
     public NewContactModal clickOnActionButton(String buttonName) {
+        log.info("Clicking on action button: {}", buttonName);
         By button = By.xpath(String.format(ACTION_BUTTON_PATTERN, buttonName));
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(button));
@@ -40,10 +47,11 @@ public class ContactsPage extends BasePage {
 
     @Step("Проверка создания аккаунта")
     public boolean contactCreated() {
+        log.info("Verifying account creation");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement successMessage = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(By.cssSelector(MESSAGE_SELECTOR)));
-        return successMessage.isDisplayed();
+        WebElement messageBlock = wait.until(ExpectedConditions.visibilityOfElementLocated(MESSAGE));
+        String result = messageBlock.getAttribute("data-key");
+        return (result.equals("success"));
     }
 }
 

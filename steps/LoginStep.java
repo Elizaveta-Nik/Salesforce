@@ -1,27 +1,27 @@
 package steps;
 
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
-import pages.Contacts.ContactsPage;
-import pages.HomePage;
 import pages.LoginPage;
 
-
+@Log4j2
 public class LoginStep {
 
     private LoginPage loginPage;
-    private ContactsPage contactsPage;
-    private HomePage homePage;
 
     public LoginStep(WebDriver driver) {
         loginPage = new LoginPage(driver);
-        homePage = new HomePage(driver);
-        contactsPage = new ContactsPage(driver);
+        log.info("LoginStep initialized with driver: {}", driver);
     }
 
     @Step("Войдите в приложение с действительными данными - имя пользователя: {userName}, пароль: {password}.")
-    public HomePage login(String userName, String password) {
-        loginPage.open();
-        return loginPage.login(userName, password);
+    public void login() {
+        log.info("Starting login process");
+        loginPage.open()
+                .isPageOpened()
+                .login("tborodich@tms.sandbox", "Password001")
+                .open();
+        log.info("Login process completed");
     }
 }
