@@ -19,7 +19,6 @@ public class ContactStep {
         homePage = new HomePage(driver);
         contactsPage = new ContactsPage(driver);
         newContactModal = new NewContactModal(driver);
-        log.info("ContactStep initialized with driver: {}", driver);
     }
 
     @Step("Создание нового контакта")
@@ -31,6 +30,5 @@ public class ContactStep {
                 .clickOnActionButton("New")
                 .createContact(contact)
                 .clickButton("Save");
-        log.info("Contact created successfully: {}", contact);
     }
 }

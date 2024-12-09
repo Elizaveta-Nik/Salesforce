@@ -16,6 +16,7 @@ public class ContactsPage extends BasePage {
 
     private final By MESSAGE = By.xpath("//div[@data-aura-class='forceToastMessage']");
     private String ACTION_BUTTON_PATTERN = "//lightning-button/button[text()='%s']";
+    private final By TITLE = By.xpath("//span[@title='Name']");
 
     public ContactsPage(WebDriver driver) {
         super(driver);
@@ -24,7 +25,7 @@ public class ContactsPage extends BasePage {
     @Override
     public ContactsPage isPageOpened() {
         log.info("Checking if Contacts page is opened");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@title='Name']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(TITLE));
         return this;
     }
 
@@ -39,7 +40,6 @@ public class ContactsPage extends BasePage {
     public NewContactModal clickOnActionButton(String buttonName) {
         log.info("Clicking on action button: {}", buttonName);
         By button = By.xpath(String.format(ACTION_BUTTON_PATTERN, buttonName));
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(button));
         driver.findElement(button).click();
         return new NewContactModal(driver);

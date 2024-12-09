@@ -12,7 +12,6 @@ public class LoginStep {
 
     public LoginStep(WebDriver driver) {
         loginPage = new LoginPage(driver);
-        log.info("LoginStep initialized with driver: {}", driver);
     }
 
     @Step("Войдите в приложение с действительными данными - имя пользователя: {userName}, пароль: {password}.")

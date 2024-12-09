@@ -16,6 +16,7 @@ public class AccountsPage extends BasePage {
 
     private final By MESSAGE = By.xpath("//div[@data-aura-class='forceToastMessage']");
     private String ACTION_BUTTON_PATTERN = "//div[@title='%s']";
+    private final By TITLE = By.xpath("//span[@title='Account Name']");
 
     public AccountsPage(WebDriver driver) {
         super(driver);
@@ -24,7 +25,7 @@ public class AccountsPage extends BasePage {
     @Override
     public AccountsPage isPageOpened() {
         log.info("Checking if Accounts page is opened");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@title='Account Name']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(TITLE));
         return this;
     }
 

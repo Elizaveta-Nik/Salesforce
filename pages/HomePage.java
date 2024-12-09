@@ -12,6 +12,7 @@ import pages.Contacts.ContactsPage;
 public class HomePage extends BasePage {
 
     private final String MENU_OPTION_PATTERN = "//span[text()='%s']//ancestor::one-app-nav-bar-item-root[@role='listitem']";
+    private final By TITLE = By.xpath("//img[@alt='User']//ancestor::button[@type='button']");
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -20,8 +21,7 @@ public class HomePage extends BasePage {
     @Override
     public HomePage isPageOpened() {
         log.info("Checking if Home page is opened");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
-                "//img[@alt='User']//ancestor::button[@type='button']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(TITLE));
         return this;
     }
 

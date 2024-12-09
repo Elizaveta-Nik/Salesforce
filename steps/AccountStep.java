@@ -31,6 +31,5 @@ public class AccountStep {
                 .clickOnActionButton("New")
                 .createAccount(account)
                 .clickButton("Save");
-        log.info("Account created successfully: {}", account);
     }
 }

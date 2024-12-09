@@ -1,5 +1,6 @@
 package tests;
 
+import com.github.javafaker.Faker;
 import dto.Contact;
 import io.qameta.allure.Description;
 import lombok.extern.log4j.Log4j2;
@@ -7,10 +8,18 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import tests.base.BaseTest;
 
-import static dto.ContactFactory.getContact;
 
 @Log4j2
 public class ContactsTest extends BaseTest {
+
+    Faker faker = new Faker();
+    Contact contactTest = Contact.builder()
+            .salutation("Dr.")
+            .firstName("Veta")
+            .lastName("Hi")
+            .phone(faker.phoneNumber().phoneNumber())
+            .phone(faker.phoneNumber().phoneNumber())
+            .build();
 
     @Test(testName = "Create a new contact",
             description = "Verify that a new contact can be created with valid data")
@@ -21,9 +30,10 @@ public class ContactsTest extends BaseTest {
         loginStep.login();
         log.info("Logged into the system");
 
-        Contact newContact = getContact("Dr.", "Web", "Tertiary");
-
-        contactStep.create(newContact);
+//        Contact newContact = getContact("Dr.", "Web", "Tertiary");
+//
+//        contactStep.create(newContact);
+        contactStep.create(contactTest);
         log.info("Contact created");
 
         boolean isContactCreated = contactsPage.contactCreated();

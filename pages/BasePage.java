@@ -28,7 +28,6 @@ public abstract class BasePage {
                         .toString().equals("complete");
             }
         });
-        log.info("Page loaded successfully");
     }
 
     public abstract BasePage isPageOpened();

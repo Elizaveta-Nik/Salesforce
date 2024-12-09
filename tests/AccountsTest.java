@@ -1,5 +1,6 @@
 package tests;
 
+import com.github.javafaker.Faker;
 import dto.Account;
 import io.qameta.allure.Description;
 import lombok.extern.log4j.Log4j2;
@@ -7,17 +8,17 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import tests.base.BaseTest;
 
-import static dto.AccountFactory.getAccount;
 
 @Log4j2
 public class AccountsTest extends BaseTest {
 
-//    Faker faker = new Faker();
-//    Account account = Account.builder()
-//            .accountName("Veta")
-//            .fax("123123")
-//            .shippingState(faker.address().state())
-//            .build();
+    Faker faker = new Faker();
+    Account accountTest = Account.builder()
+            .accountName("Veta")
+            .phone("1213123")
+            .fax(faker.phoneNumber().cellPhone())
+            .rating("Hot")
+            .build();
 
     @Test(testName = "Create a new account",
             description = "Verify that a new account can be created with valid data")
@@ -28,10 +29,11 @@ public class AccountsTest extends BaseTest {
         loginStep.login();
         log.info("Logged into the system");
 
-        Account newAccount = getAccount("Hot", "Customer - Direct", "Private", "Chemicals",
-                "High", "Platinum", "Maybe", "Yes");
+//        Account newAccount = getAccount("Hot", "Customer - Direct", "Private", "Chemicals",
+//                "High", "Platinum", "Maybe", "Yes");
+        accountStep.create(accountTest);
 
-        accountStep.create(newAccount);
+//        accountStep.create(newAccount);
         log.info("Account created");
 
         boolean isAccountCreated = accountsPage.accountCreated();
@@ -41,6 +43,3 @@ public class AccountsTest extends BaseTest {
         log.info("Test completed: Create a new account");
     }
 }
-
-
-
