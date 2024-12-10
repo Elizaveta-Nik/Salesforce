@@ -21,6 +21,7 @@ import steps.AccountStep;
 import steps.ContactStep;
 import steps.LoginStep;
 import tests.TestListener;
+import utils.PropertyReader;
 
 import java.time.Duration;
 
@@ -38,6 +39,9 @@ public abstract class BaseTest {
     protected ContactStep contactStep;
     protected LoginStep loginStep;
     protected HomePage homePage;
+
+    String user = System.getProperty("user", PropertyReader.getProperty("user"));
+    String password = System.getProperty("password", PropertyReader.getProperty("password"));
 
     @Parameters({"browser"})
     @BeforeMethod(alwaysRun = true)

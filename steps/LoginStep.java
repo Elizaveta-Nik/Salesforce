@@ -12,14 +12,18 @@ public class LoginStep {
 
     public LoginStep(WebDriver driver) {
         loginPage = new LoginPage(driver);
+        log.info("LoginStep initialized with driver: {}", driver);
     }
 
     @Step("Войдите в приложение с действительными данными - имя пользователя: {userName}, пароль: {password}.")
     public void login() {
-        log.info("Starting login process");
+        String userName = System.getenv("USERNAME");
+        String password = System.getenv("PASSWORD");
+
+        log.info("Starting login process for user: {}", userName);
         loginPage.open()
                 .isPageOpened()
-                .login("tborodich@tms.sandbox", "Password001")
+                .login(userName, password)
                 .open();
         log.info("Login process completed");
     }
