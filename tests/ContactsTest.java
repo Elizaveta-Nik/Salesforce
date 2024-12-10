@@ -16,7 +16,7 @@ public class ContactsTest extends BaseTest {
     Contact contactTest = Contact.builder()
             .salutation("Dr.")
             .firstName("Veta")
-            .lastName("Hi")
+            .lastName(faker.name().lastName())
             .phone(faker.phoneNumber().phoneNumber())
             .phone(faker.phoneNumber().phoneNumber())
             .build();
@@ -30,9 +30,6 @@ public class ContactsTest extends BaseTest {
         loginStep.login();
         log.info("Logged into the system");
 
-//        Contact newContact = getContact("Dr.", "Web", "Tertiary");
-//
-//        contactStep.create(newContact);
         contactStep.create(contactTest);
         log.info("Contact created");
 

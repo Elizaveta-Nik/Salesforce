@@ -29,11 +29,8 @@ public class AccountsTest extends BaseTest {
         loginStep.login();
         log.info("Logged into the system");
 
-//        Account newAccount = getAccount("Hot", "Customer - Direct", "Private", "Chemicals",
-//                "High", "Platinum", "Maybe", "Yes");
         accountStep.create(accountTest);
 
-//        accountStep.create(newAccount);
         log.info("Account created");
 
         boolean isAccountCreated = accountsPage.accountCreated();

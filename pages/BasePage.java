@@ -24,7 +24,8 @@ public abstract class BasePage {
         log.info("Waiting for page to load");
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
-                return Objects.requireNonNull(((JavascriptExecutor) driver).executeScript("return document.readyState"))
+                return Objects.requireNonNull(((JavascriptExecutor) driver)
+                        .executeScript("return document.readyState"))
                         .toString().equals("complete");
             }
         });

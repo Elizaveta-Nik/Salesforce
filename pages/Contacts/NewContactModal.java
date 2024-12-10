@@ -38,37 +38,93 @@ public class NewContactModal extends BasePage {
     @Step("Заполнение формы нового контакта корректными данными.")
     public NewContactModal createContact(Contact contact) {
         log.info("Creating contact '{}' '{}'", contact.getFirstName(),contact.getLastName());
-        new Picklist(driver, "Salutation").select(contact.getSalutation());
-        new Input(driver, "First Name").write(contact.getFirstName());
-        new Input(driver, "Last Name").write(contact.getLastName());
-        new Input(driver, "Phone").write(contact.getPhone());
-//        new Input(driver, "Home Phone").write(contact.getHomePhone());
-//        new Input(driver, "Mobile").write(contact.getMobile());
-//        new Input(driver, "Other Phone").write(contact.getOtherPhone());
-//        new Input(driver, "Fax").write(contact.getFax());
-//        new Input(driver, "Title").write(contact.getTitle());
-//        new Input(driver, "Department").write(contact.getDepartment());
-//        new Date(driver, "Birthdate").write(contact.getBirthdate());
-//        new Input(driver, "Email").write(contact.getEmail());
-//        new Input(driver, "Assistant").write(contact.getAssistant());
-//        new Picklist(driver, "Lead Source").select(contact.getLeadSource());
-//        new Input(driver, "Asst. Phone").write(contact.getAsstPhone());
-//
-//        new TextArea(driver, "Mailing Street").write(contact.getMailingStreet());
-//        new Input(driver, "Mailing City").write(contact.getMailingCity());
-//        new Input(driver, "Mailing State/Province").write(contact.getMailingState());
-//        new Input(driver, "Mailing Zip/Postal Code").write(contact.getMailingZip());
-//        new Input(driver, "Mailing Country").write(contact.getMailingCountry());
-//
-//        new TextArea(driver, "Other Street").write(contact.getOtherStreet());
-//        new Input(driver, "Other City").write(contact.getOtherCity());
-//        new Input(driver, "Other State/Province").write(contact.getOtherState());
-//        new Input(driver, "Other Zip/Postal Code").write(contact.getOtherZip());
-//        new Input(driver, "Other Country").write(contact.getOtherCountry());
-//
-//        new Input(driver, "Languages").write(contact.getLanguages());
-//        new Picklist(driver, "Level").select(contact.getLevel());
-//        new TextArea(driver, "Description").write(contact.getDescription());
+        if (contact.getSalutation() != null) {
+            new Picklist(driver, "Salutation").select(contact.getSalutation());
+        }
+        if (contact.getFirstName() != null) {
+            new Input(driver, "First Name").write(contact.getFirstName());
+        }
+        if (contact.getLastName() != null) {
+            new Input(driver, "Last Name").write(contact.getLastName());
+        }
+        if (contact.getPhone() != null) {
+            new Input(driver, "Phone").write(contact.getPhone());
+        }
+        if (contact.getHomePhone() != null) {
+            new Input(driver, "Home Phone").write(contact.getHomePhone());
+        }
+        if (contact.getMobile() != null) {
+            new Input(driver, "Mobile").write(contact.getMobile());
+        }
+        if (contact.getOtherPhone() != null) {
+            new Input(driver, "Other Phone").write(contact.getOtherPhone());
+        }
+        if (contact.getFax() != null) {
+            new Input(driver, "Fax").write(contact.getFax());
+        }
+        if (contact.getTitle() != null) {
+            new Input(driver, "Title").write(contact.getTitle());
+        }
+        if (contact.getDepartment() != null) {
+            new Input(driver, "Department").write(contact.getDepartment());
+        }
+        if (contact.getBirthdate() != null) {
+            new Date(driver, "Birthdate").write(contact.getBirthdate());
+        }
+        if (contact.getEmail() != null) {
+            new Input(driver, "Email").write(contact.getEmail());
+        }
+        if (contact.getAssistant() != null) {
+            new Input(driver, "Assistant").write(contact.getAssistant());
+        }
+        if (contact.getLeadSource() != null) {
+            new Picklist(driver, "Lead Source").select(contact.getLeadSource());
+        }
+        if (contact.getAsstPhone() != null) {
+            new Input(driver, "Asst. Phone").write(contact.getAsstPhone());
+        }
+
+        if (contact.getMailingStreet() != null) {
+            new TextArea(driver, "Mailing Street").write(contact.getMailingStreet());
+        }
+        if (contact.getMailingCity() != null) {
+            new Input(driver, "Mailing City").write(contact.getMailingCity());
+        }
+        if (contact.getMailingState() != null) {
+            new Input(driver, "Mailing State/Province").write(contact.getMailingState());
+        }
+        if (contact.getMailingZip() != null) {
+            new Input(driver, "Mailing Zip/Postal Code").write(contact.getMailingZip());
+        }
+        if (contact.getMailingCountry() != null) {
+            new Input(driver, "Mailing Country").write(contact.getMailingCountry());
+        }
+
+        if (contact.getOtherStreet() != null) {
+            new TextArea(driver, "Other Street").write(contact.getOtherStreet());
+        }
+        if (contact.getOtherCity() != null) {
+            new Input(driver, "Other City").write(contact.getOtherCity());
+        }
+        if (contact.getOtherState() != null) {
+            new Input(driver, "Other State/Province").write(contact.getOtherState());
+        }
+        if (contact.getOtherZip() != null) {
+            new Input(driver, "Other Zip/Postal Code").write(contact.getOtherZip());
+        }
+        if (contact.getOtherCountry() != null) {
+            new Input(driver, "Other Country").write(contact.getOtherCountry());
+        }
+
+        if (contact.getLanguages() != null) {
+            new Input(driver, "Languages").write(contact.getLanguages());
+        }
+        if (contact.getLevel() != null) {
+            new Picklist(driver, "Level").select(contact.getLevel());
+        }
+        if (contact.getDescription() != null) {
+            new TextArea(driver, "Description").write(contact.getDescription());
+        }
 
         return this;
     }

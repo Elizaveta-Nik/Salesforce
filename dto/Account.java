@@ -19,8 +19,8 @@ public class Account {
     private final String type;
     private final String ownership;
     private final String industry;
-    private final int employees;
-    private final double annualRevenue;
+    private final String employees;
+    private final String annualRevenue;
     private final String sicCode;
     private final String billingStreet;
     private final String billingCity;
@@ -36,7 +36,7 @@ public class Account {
     private final String sla;
     private final String date;
     private final String slaSerialNumber;
-    private final int numberOfLocations;
+    private final String numberOfLocations;
     private final String upsellOpportunity;
     private final String active;
     private final String description;
